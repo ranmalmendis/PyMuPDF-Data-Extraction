@@ -80,10 +80,10 @@ def pdf_extractor(pdf_path):
         ----------------------------------------------------------------------------------------
         Sample PDF Output:
     
-        Name of Insured: {name}
-        Policy Number: {policy_num}
-        Effective Date: {effective_date}
-        Expiry Date: {expiry_date}
+        Name of Insured: {results['Name of Insured']}
+        Policy Number: {results['Policy Number']}
+        Effective Date: {results['Effective Date']}
+        Expiry Date: {results['Expiry Date']}
         ----------------------------------------------------------------------------------------
         '''
               )
@@ -101,7 +101,7 @@ def date_checker(dates):
         results['Expiry Date'] = expiry_date
         global effective_date
         effective_date = dates[0]
-        results['Expiry Date'] = effective_date
+        results['Effective Date'] = effective_date
 
 
 pdf_extractor('../Resources/pdf_sample_format2.pdf')
