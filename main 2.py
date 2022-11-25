@@ -1,16 +1,15 @@
+import fitz
 import re
 from datetime import datetime
 import pandas as pd
 from dateutil import parser
-
-import fitz
 
 name = ""
 policy_num = ""
 effective_date = ""
 expiry_date = ""
 
-# print(fitz.__doc__)
+print(fitz.__doc__)
 
 
 def pdf_extractor(pdf_path):
