@@ -10,6 +10,7 @@ effective_date = ""
 expiry_date = ""
 
 print(fitz.__doc__)
+results = {}
 
 
 def pdf_extractor(pdf_path):
@@ -26,7 +27,6 @@ def pdf_extractor(pdf_path):
 
         # get all annotations on a page
         annots = page.annots()
-
         # looping through annotations
         highlighted_contents = []
         for a in annots:
@@ -52,11 +52,13 @@ def pdf_extractor(pdf_path):
 
         global name
         name = [s for s in highlighted_contents if name_regex.match(s)][0]
+        results['Name of Insured'] = name
         highlighted_contents.remove(name)
 
         global policy_num
         policy_num = [s for s in highlighted_contents if number_regex.match(s)][0]
         highlighted_contents.remove(policy_num)
+        results['Policy Number'] = policy_num
 
         dates = []
         for i in highlighted_contents:
@@ -67,9 +69,9 @@ def pdf_extractor(pdf_path):
             else:
                 date_time = parser.parse(i)
                 # print('date time', date_time)
-                strdate=str(pd.to_datetime(i))
-                formated=strdate.split(' ')[0]
-                dates.append(formated.replace('-','/'))
+                strdate = str(pd.to_datetime(i))
+                formated = strdate.split(' ')[0]
+                dates.append(formated.replace('-', '/'))
 
         # print('dates are ', dates)
         date_checker(dates)
@@ -85,6 +87,7 @@ def pdf_extractor(pdf_path):
         ----------------------------------------------------------------------------------------
         '''
               )
+        return results
 
 
 def date_checker(dates):
@@ -94,11 +97,14 @@ def date_checker(dates):
     if d1 < d2:
         global expiry_date
         expiry_date = dates[1]
+        global results
+        results['Expiry Date'] = expiry_date
         global effective_date
         effective_date = dates[0]
+        results['Expiry Date'] = effective_date
 
 
-pdf_extractor('./Resources/pdf_sample_format2.pdf')
+pdf_extractor('../Resources/pdf_sample_format2.pdf')
 
 if __name__ == '__main__':
     pass
