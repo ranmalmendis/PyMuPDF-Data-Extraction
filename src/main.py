@@ -48,25 +48,26 @@ def pdf_extractor(pdf_path):
 
         name_regex = re.compile(r"^([A-Za-z \-]{2,25})+$", re.MULTILINE)
         number_regex = re.compile(r"^[-+]?[0-9]+$")
-        date_regex1 = re.compile(r"^\d{4}\/\d{2}\/\d{2}$")
-
-        global name
-        name = [s for s in highlighted_contents if name_regex.match(s)][0]
-        results['Name of Insured'] = name
-        highlighted_contents.remove(name)
-
-        global policy_num
-        policy_num = [s for s in highlighted_contents if number_regex.match(s)][0]
-        highlighted_contents.remove(policy_num)
-        results['Policy Number'] = policy_num
+        date_regex1 = re.compile(r"^\d{4}\/\d{2}\/\d{2}")
+        date_regex2 = re.compile(r"^[A-Za-z]{2,10}\s\d{2}\,\s\d{4}$")
 
         dates = []
-        for i in highlighted_contents:
-            if i[-1] == ',':
-                if date_regex1.match(i[:-1]):
-                    dates.append(i[:-1])
 
-            else:
+        for i in highlighted_contents:
+            if name_regex.match(i):
+                global name
+                name = i
+                results['Name of Insured'] = name
+
+            elif number_regex.match(i):
+                global policy_num
+                policy_num = i
+                results['Policy Number'] = policy_num
+
+            elif date_regex1.match(i):
+                dates.append(i[:-1])
+
+            elif date_regex2.match(i):
                 date_time = parser.parse(i)
                 # print('date time', date_time)
                 strdate = str(pd.to_datetime(i))
@@ -104,7 +105,7 @@ def date_checker(dates):
         results['Effective Date'] = effective_date
 
 
-pdf_extractor('../Resources/pdf_sample_format2.pdf')
+pdf_extractor('../Resources/pdf_sample_format1.pdf')
 
 if __name__ == '__main__':
     pass
