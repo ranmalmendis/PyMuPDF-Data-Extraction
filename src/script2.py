@@ -89,13 +89,16 @@ def get_data(page, doc_format):
             elif neighbour == "POLICY INFORMATION\n":
                 string = extrated_text[extrated_text.index(item) + 1][4]
                 effective_date = string.split('\nFrom ')[1].split('to')[0]
+
+                # changing the format of the dates using pandas
                 str_effective_date = str(pd.to_datetime(effective_date.strip()))
                 formated_effective_date = str_effective_date.split(' ')[0]
-
                 results['Effective Date'] = formated_effective_date.replace('-', '/')
                 # print("Effective Date extracted from the location is", results['Effective Date'])
 
                 expiry_date = string.split('to ')[1][:-10]
+
+                # changing the format of the dates using pandas
                 str_expiry_date = str(pd.to_datetime(expiry_date.strip()))
                 formated_expiry_date = str_expiry_date.split(' ')[0]
                 results['Expiry Date'] = formated_expiry_date.replace('-', '/')
@@ -116,7 +119,7 @@ def format_checker(page):
 
 
 # calling the pdf_extractor function and passing the path to pdf as a parameter
-pdf_extractor('../Resources/pdf_sample_format2.pdf')
+pdf_extractor('../Resources/pdf_sample_format1.pdf')
 
 if __name__ == '__main__':
     pass
