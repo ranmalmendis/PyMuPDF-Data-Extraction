@@ -38,8 +38,10 @@ def pdf_extractor(pdf_path):
 
 
 def get_data(page, doc_format):
-    # extracting the texts with PyMuPdf's get_text method
-    extrated_text = page.get_text("blocks")
+    # extracting the texts and sorting with PyMuPdf's get_text method
+    extrated_text = page.get_text("blocks", sort=True)
+
+    # print(extrated_text)
 
     global results
     # iterating through the extracted text blocks, this list contains items as tuples.
@@ -76,12 +78,12 @@ def get_data(page, doc_format):
         if doc_format == 2:
 
             # Extracting the policy number
-            if neighbour == "Underwritten by\nDefinity Insurance Company\n":
-                string = extrated_text[extrated_text.index(item) + 1][4]
-                results['Policy Number'] = string.split(' ')[2].strip()
+            if neighbour.find("POLICY NUMBER") != -1:
+                string = neighbour.split(' ')[2]
+                results['Policy Number'] = string.strip()
                 # print("The poicy number extracted from the lcation is", results['Policy Number'])
 
-            elif neighbour.find("Overland Water") != -1:
+            elif neighbour == "Name of Insured(s)\n":
                 string = extrated_text[extrated_text.index(item) + 1][4]
                 results['Name of Insured'] = string.split('\n')[0].strip()
                 # print("Named Insured extracted from the location is", results['Name of Insured'])
@@ -119,7 +121,7 @@ def format_checker(page):
 
 
 # calling the pdf_extractor function and passing the path to pdf as a parameter
-pdf_extractor('../Resources/pdf_sample_format1.pdf')
+pdf_extractor('../Resources/pdf_sample_format2.pdf')
 
 if __name__ == '__main__':
     pass
