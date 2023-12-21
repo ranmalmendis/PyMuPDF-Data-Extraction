@@ -51,6 +51,6 @@ To use the scripts, navigate to the project directory and run:
 - **main.py**: Utilizes PyMuPDF to process PDF documents and extract highlighted text. It identifies highlighted annotations and retrieves the corresponding text.
 
 ### Demo Videos
-- script2.py Demo: [View on Loom](https://www.loom.com/share/0b6af5266b154bda913dd32d5d09ce4a)
-- main.py Demo: [View on Loom](https://www.loom.com/share/55eb9310917443668642bdcd8ebb5cd7)
+- script2.py Demo:  https://www.loom.com/share/0b6af5266b154bda913dd32d5d09ce4a
+- main.py Demo: https://www.loom.com/share/55eb9310917443668642bdcd8ebb5cd7
 
